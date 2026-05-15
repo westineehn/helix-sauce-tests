@@ -128,16 +128,16 @@ class TestSidebarCategorization:
     def test_at_risk_section_present(self, driver):
         """Oracle and Nike should qualify as At Risk based on default data."""
         sidebar = driver.find_element(By.TAG_NAME, "aside")
-        assert "At Risk" in sidebar.text, "'At Risk' group not found in sidebar"
+        assert "AT RISK" in sidebar.text, "'AT RISK' group not found in sidebar"
 
     def test_expansion_section_present(self, driver):
         """Netflix and Anthropic should qualify as Expansion based on default data."""
         sidebar = driver.find_element(By.TAG_NAME, "aside")
-        assert "Expansion" in sidebar.text, "'Expansion Opp' group not found in sidebar"
+        assert "EXPANSION OPP" in sidebar.text, "'EXPANSION OPP' group not found in sidebar"
 
     def test_stable_section_present(self, driver):
         sidebar = driver.find_element(By.TAG_NAME, "aside")
-        assert "Stable" in sidebar.text, "'Stable' group not found in sidebar"
+        assert "STABLE" in sidebar.text, "'STABLE' group not found in sidebar"
 
     def test_priority_labels_visible(self, driver):
         sidebar = driver.find_element(By.TAG_NAME, "aside")
@@ -160,8 +160,8 @@ class TestAccountSelection:
 
     def test_default_account_shows_industry(self, driver):
         main = driver.find_element(By.TAG_NAME, "main")
-        industries = ["Streaming", "Enterprise", "Insurance", "AI", "Logistics", "Retail", "Supply Chain"]
-        assert any(kw in main.text for kw in industries), (
+        industries = ["STREAMING", "ENTERPRISE", "INSURANCE", "AI", "LOGISTICS", "RETAIL", "SUPPLY CHAIN"]
+        assert any(kw in main.text.upper() for kw in industries), (
             "No industry label found in main panel"
         )
 
@@ -205,28 +205,28 @@ class TestSignalCards:
     """
 
     EXPECTED_LABELS = [
-        "Product Adoption",
-        "Exec Sponsor",
-        "Engagement Cadence",
-        "Expansion History",
-        "Champion",
-        "External Signal",
+        "PRODUCT ADOPTION",
+        "EXEC SPONSOR",
+        "ENGAGEMENT CADENCE",
+        "EXPANSION HISTORY",
+        "CHAMPION",
+        "EXTERNAL SIGNAL",
     ]
 
     def test_all_signal_card_labels_present(self, driver):
         main = driver.find_element(By.TAG_NAME, "main")
-        missing = [l for l in self.EXPECTED_LABELS if l not in main.text]
+        missing = [l for l in self.EXPECTED_LABELS if l not in main.text.upper()]
         assert not missing, f"Missing signal card labels: {missing}"
 
     def test_renewal_outlook_section_visible(self, driver):
         """Renewal Outlook block renders below account header."""
         main = driver.find_element(By.TAG_NAME, "main")
-        assert "Renewal Outlook" in main.text, "Renewal Outlook section not found"
+        assert "RENEWAL OUTLOOK" in main.text.upper(), "Renewal Outlook section not found"
 
     def test_renewal_probability_label_present(self, driver):
         """Probability must be one of three labeled states."""
         main = driver.find_element(By.TAG_NAME, "main")
-        assert any(p in main.text for p in ["High Confidence", "Needs Attention", "At Risk"]), (
+        assert any(p in main.text.upper() for p in ["HIGH CONFIDENCE", "NEEDS ATTENTION", "AT RISK"]), (
             "No renewal probability label found"
         )
 
